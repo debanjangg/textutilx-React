@@ -11,11 +11,21 @@ import React, {useState} from 'react'
         }
     
         const handleUpClick = () => {
-            setText(text.toUpperCase())
+            if(text === '')
+                props.showAlert("danger","No input text for conversion");
+            else{
+                setText(text.toUpperCase());
+                props.showAlert("success","Converted to Upper Case");
+            }
         }    
     
         const handleLoClick = () => {
-            setText(text.toLowerCase())
+            if(text === '')
+                props.showAlert("danger","No input text for conversion");
+            else{
+                setText(text.toLowerCase());
+                props.showAlert("success","Converted to Lower Case");
+            }
         }
         
         const handleTitleClick = () => {
@@ -23,24 +33,46 @@ import React, {useState} from 'react'
                 let stArr = str.trim().split(' ');
                 let res = ""
                 for(let x=0; x<stArr.length; x++){
+                    if(x)
+                        res += ' '
                     let word= stArr[x]
-                    res += word[0].toUpperCase() + word.slice(1).toLowerCase() + " "
+                    res += word[0].toUpperCase() + word.slice(1).toLowerCase()
                 }
                 return res.trim()
             }
-            setText(getTitleCase(text))
+            if(text === '')
+                props.showAlert("danger","No input text for conversion");
+            else{
+                setText(getTitleCase(text));
+                props.showAlert("success","Converted to Title Case");
+            }
         }
-        
+
         const handleCopyClick = () => {
-            navigator.clipboard.writeText(text)
+                if(text === '')
+                    props.showAlert("danger","No input text to copying");
+                else{
+                    navigator.clipboard.writeText(text);;
+                    props.showAlert("success","Text copied to clipboard");
+            }
         }
-        
+            
         const handleSpaces = () => {
-            setText(text.trim().replace(/[ ]+/g, ' '))
+            if(text === '')
+                props.showAlert("danger","No input text for space removal");
+            else{
+                setText(text.trim().replace(/[ ]+/g, ' '));
+                props.showAlert("success","Extra spaces removed");
+            }
         }
-        
+            
         const handleClearClick = () => {
-            setText('')
+            if(text === '')
+                props.showAlert("danger","Textbox is already clear");
+            else{
+                setText('');
+                props.showAlert("success","Textbox cleared");
+            }
         }
         
         const getWords = () =>{

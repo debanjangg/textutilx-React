@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
-
     
-    export default function TextForm(prop) {
+    export default function TextForm(props) {
         
         const [text, setText] = useState('Enter text here');
         // text = "updated text" //wrong way to cheange the state
@@ -40,6 +39,10 @@ import React, {useState} from 'react'
             setText(text.trim().replace(/[ ]+/g, ' '))
         }
         
+        const handleClearClick = () => {
+            setText('')
+        }
+        
         const getWords = () =>{
             if(text === '')
                 return 0
@@ -50,19 +53,20 @@ import React, {useState} from 'react'
         return (
             <>
             <div>
-                <div className="mb-3 my-3">
-                    <label htmlFor="textBox" className="form-label">{prop.heading}</label>
-                    <textarea className="form-control" value={text} onChange={handleOnChange} id="textBox" rows="8"></textarea>
+                <div className="mb-3 my-3" style={{color: props.theme === 'dark'?'white':'black'}}>
+                    <label htmlFor="textBox" className="form-label"><h2>{props.heading}</h2></label>
+                    <textarea className="form-control" style={{color: props.theme === 'dark'?'white':'black', backgroundColor: props.theme === 'light'?'white':'gray'}} value={text} onChange={handleOnChange} id="textBox" rows="8"></textarea>
                 </div>
                 <button className="btn btn-primary mx-1 my-1" onClick={handleUpClick}>Convert to Uppercase</button>
                 <button className="btn btn-primary mx-1 my-1" onClick={handleLoClick}>Convert to Lowercase</button>
                 <button className="btn btn-primary mx-1 my-1" onClick={handleTitleClick}>Convert to Titlecase</button>
                 <button className="btn btn-primary mx-1 my-1" onClick={handleCopyClick}>Copy Text</button>
+                <button className="btn btn-primary mx-1 my-1" onClick={handleClearClick}>Clear Text</button>
                 <button className="btn btn-primary mx-1 my-1" onClick={handleSpaces}>Remove excess spaces</button>
             </div>
-            <div className='my-4'>
+            <div className='my-4' style={{color: props.theme === 'dark'?'white':'black'}}>
                 <h2>Your text summary:</h2>
-                <p>{getWords(text)} words, {text.length} characters.<br/>{0.008 * text.split(' ').length * 60} second read.</p>
+                <p>{getWords(text)} words, {text.length} characters.<br/>{0.008 * getWords(text) * 60} second read.</p>
                 <p></p>
             </div>
             </>
